@@ -99,9 +99,6 @@ export default function ProductoPlataforma() {
         <Button asChild size="lg" className="rounded-2xl">
           <Link href="/#contact">Solicitar propuesta</Link>
         </Button>
-        <Button asChild variant="outline" size="lg" className="rounded-2xl">
-          <Link href="/productos">← Ver todos los productos</Link>
-        </Button>
         <Button asChild variant="ghost" size="lg" className="rounded-2xl">
           <Link href="/">← Ir al inicio</Link>
         </Button>
