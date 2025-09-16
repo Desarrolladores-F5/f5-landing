@@ -1,199 +1,335 @@
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import { Button } from "@/components/ui/button";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "Backoffice — Gestión documental y flujos internos con trazabilidad y cumplimiento",
+export const metadata: Metadata = {
+  title: "Landing Page — Capta tráfico, valida mensajes y convierte en leads",
   description:
-    "Plataforma interna en Next.js para gestión documental, workflows, firmas electrónicas, RBAC granular, auditoría completa y observabilidad. Integraciones, gobierno de datos y seguridad por diseño.",
+    "Landing Page en Next.js optimizada para performance y conversión: propuesta de valor clara, SEO técnico, pruebas A/B, medición en GA4 y despliegue continuo.",
+  keywords: [
+    "landing page",
+    "Next.js",
+    "conversión",
+    "A/B testing",
+    "SEO",
+    "Core Web Vitals",
+    "tracking",
+    "GA4",
+    "embudo",
+  ],
+  alternates: {
+    canonical: "/productos/landingpage",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://tudominio.com/productos/landingpage",
+    title: "Landing Page — Capta tráfico y convierte",
+    description:
+      "Landing Page en Next.js con foco en performance, claridad del mensaje, experimentación y medición.",
+    images: [
+      {
+        url: "https://tudominio.com/images/productos/p2.jpg",
+        width: 1280,
+        height: 720,
+        alt: "Landing Page moderna enfocada en conversión",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Landing Page — Capta tráfico y convierte",
+    description:
+      "Next.js + SEO + Web Vitals + experimentación + medición de conversiones.",
+    images: ["https://tudominio.com/images/productos/p2.jpg"],
+  },
 };
 
-export default function Page() {
+export default function LandingPageProducto() {
   return (
     <article className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10">
+      {/* === JSON-LD: Service + FAQPage === */}
+      <Script id="ld-service-landing" type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: "Diseño y desarrollo de Landing Page",
+          serviceType: "Landing Page",
+          areaServed: "CL",
+          provider: {
+            "@type": "Organization",
+            name: "F5",
+            url: "https://tudominio.com",
+          },
+          description:
+            "Landing Page desarrollada en Next.js con foco en performance, claridad del mensaje, experimentación y medición.",
+          offers: {
+            "@type": "Offer",
+            availability: "https://schema.org/InStock",
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              priceCurrency: "CLP",
+            },
+          },
+          url: "https://tudominio.com/productos/landingpage",
+        })}
+      </Script>
+
+      <Script id="ld-faq-landing" type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: [
+            {
+              "@type": "Question",
+              name: "¿Podemos hacer pruebas A/B?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text:
+                  "Sí. Dejamos instrumentadas variantes de título, CTA, testimonios y disposición de bloques; medimos con GA4 o herramientas de experimentación.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "¿Se integra con mi CRM o con formularios externos?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text:
+                  "Sí. Integramos CRMs (HubSpot, Pipedrive, Zoho, etc.), herramientas de e-mail y automatización por webhooks o APIs.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "¿Cómo se mide la conversión?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text:
+                  "Instrumentamos GA4 con eventos (view, scroll, clics, envíos), definimos objetivos y sugerimos un dashboard de embudo con KPIs.",
+              },
+            },
+          ],
+        })}
+      </Script>
+
       {/* Hero */}
       <Image
-        src="/images/portfolio/p4.jpg"
-        alt="Gestión documental y flujos internos"
+        src="/images/productos/p2.jpg"
+        alt="Landing Page moderna enfocada en conversión"
         width={1280}
         height={720}
-        className="rounded-2xl mb-8 object-cover border"
         priority
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1280px"
+        className="mb-8 rounded-2xl border object-cover"
       />
 
       {/* Título */}
       <header className="mb-6">
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
-          Backoffice <span className="text-slate-400">/ Documentos y Workflows</span>
+          Landing Page <span className="text-slate-400">/ Captación y conversión</span>
         </h1>
         <p className="mt-3 text-lg text-slate-600 text-justify">
-          Construimos <strong>plataformas internas</strong> para administrar documentos, orquestar flujos de
-          aprobación y asegurar <strong>trazabilidad</strong> de cada acción. Con <em>RBAC</em> granular, firmas
-          electrónicas, auditoría inmutable y <strong>observabilidad</strong>, reducimos reprocesos,
-          mejoramos cumplimiento y aceleramos la toma de decisiones.
+          Desarrollamos <strong>landing pages</strong> con foco en <strong>conversión</strong>:
+          propuesta de valor clara, <strong>CTA</strong> visibles, carga ultra rápida y
+          <strong> medición</strong> desde el día uno. Preparadas para <em>campañas</em>,
+          <strong> SEO</strong> y <strong>experimentación</strong> continua.
         </p>
       </header>
 
-      {/* Contenido */}
-      <div
-        className={[
-          "prose prose-slate md:prose-lg max-w-none",
-          "prose-headings:scroll-mt-24",
-          "prose-h2:text-3xl md:prose-h2:text-4xl prose-h2:font-bold prose-h2:tracking-tight",
-          "prose-h3:text-xl md:prose-h3:text-2xl prose-h3:font-semibold prose-h3:tracking-tight",
-          "prose-p:text-justify prose-li:text-justify prose-blockquote:text-justify",
-        ].join(" ")}
+      {/* ¿Qué problema resuelve? */}
+      <section
+        className="pt-10 mt-10 border-t border-slate-200"
+        aria-labelledby="problema-landing"
       >
-        {/* 1. Contexto y problema */}
-        <section className="pt-10 mt-10 border-t border-slate-200">
-          <h2>Contexto y problema</h2>
-          <p>
-            Contratos, órdenes, actas y minutas se gestionan con herramientas dispersas, sin control de versiones ni
-            permisos claros. Los ciclos de aprobación resultan lentos y opacos; los cambios no quedan trazados y
-            la evidencia para auditorías es insuficiente. El resultado: <strong>riesgo operativo</strong>, pérdida de
-            tiempo y falta de cumplimiento.
-          </p>
-        </section>
+        <h2 id="problema-landing" className="text-2xl font-bold">
+          ¿Qué problema resuelve?
+        </h2>
+        <ul className="mt-4 space-y-2 list-disc pl-6 text-justify">
+          <li>Mensajes genéricos o confusos que diluyen la propuesta de valor.</li>
+          <li>CTAs poco visibles o no medibles que impiden optimizar el embudo.</li>
+          <li>Rendimiento deficiente en mobile que encarece el costo por lead.</li>
+          <li>Falta de <em>insights</em> para iterar (sin eventos, sin mapas de calor, sin pruebas).</li>
+        </ul>
+      </section>
 
-        {/* 2. Objetivos */}
-        <section className="pt-10 mt-10 border-t border-slate-200">
-          <h2>Objetivos</h2>
-          <ul>
-            <li>Unificar la documentación en un repositorio con <strong>versionado</strong> y permisos por rol.</li>
-            <li>Estandarizar <strong>workflows</strong> con estados, SLA, asignaciones y vencimientos.</li>
-            <li>Incorporar <strong>firmas electrónicas</strong> y evidencias para cumplimiento.</li>
-            <li>Contar con <strong>auditoría completa</strong> de accesos y modificaciones.</li>
-          </ul>
-        </section>
+      {/* Resultados esperados */}
+      <section
+        className="pt-10 mt-10 border-t border-slate-200"
+        aria-labelledby="resultados-landing"
+      >
+        <h2 id="resultados-landing" className="text-2xl font-bold">
+          Resultados que puedes esperar
+        </h2>
+        <ul className="mt-4 space-y-2 list-disc pl-6 text-justify">
+          <li>
+            <strong>Más conversiones</strong> por claridad del mensaje, jerarquía visual y CTAs medibles.
+          </li>
+          <li>
+            <strong>Mejor quality score</strong> de campañas gracias a rendimiento y relevancia.
+          </li>
+          <li>
+            <strong>Aprendizaje continuo</strong> mediante experimentos controlados y análisis de comportamiento.
+          </li>
+        </ul>
+      </section>
 
-        {/* 3. Solución */}
-        <section className="pt-10 mt-10 border-t border-slate-200">
-          <h2>Solución</h2>
-          <p>
-            Desarrollamos un backoffice en <strong>Next.js (App Router)</strong> con módulos de documentos, flujos,
-            aprobaciones y firmas. Cada transición queda registrada (quién, qué, cuándo, desde dónde) y notificada.
-            La carga y previsualización de archivos usa almacenamiento <em>S3-compatible</em> con <em>pre-signed URLs</em>
-            y políticas de retención.
-          </p>
-          <h3>Características clave</h3>
-          <ul>
-            <li>
-              Workflows configurables: <em>borrador → revisión → aprobación → publicación/archivo</em> con SLA y recordatorios.
-            </li>
-            <li>Firmas electrónicas y registro de evidencias (timestamp, IP, usuario, hash del documento).</li>
-            <li>RBAC granular (visor, editor, aprobador, administrador) y vistas/acciones condicionadas por rol.</li>
-            <li>Buscador con filtros por estado, etiqueta, autor y fecha; exportaciones CSV/PDF.</li>
-            <li>Notificaciones por email y <em>webhooks</em> por asignación, vencimiento o rechazo.</li>
-          </ul>
-        </section>
+      {/* Para quién es */}
+      <section
+        className="pt-10 mt-10 border-t border-slate-200"
+        aria-labelledby="para-quien-landing"
+      >
+        <h2 id="para-quien-landing" className="text-2xl font-bold">
+          ¿Para quién es este producto?
+        </h2>
+        <ul className="mt-4 space-y-2 list-disc pl-6 text-justify">
+          <li>Equipos de marketing con foco en <strong>captación</strong> y <strong>performance</strong>.</li>
+          <li>Negocios que validan <strong>propuestas</strong> o <strong>ofertas</strong> antes de escalar.</li>
+          <li>Organizaciones que requieren <strong>medición</strong> y <strong>iteración</strong> rápidas.</li>
+        </ul>
+      </section>
 
-        {/* 4. Módulos típicos */}
-        <section className="pt-10 mt-10 border-t border-slate-200">
-          <h2>Módulos típicos</h2>
-          <ul>
-            <li><strong>Repositorio</strong> con versiones, etiquetas y control de acceso.</li>
-            <li><strong>Workflows</strong> por tipo de documento; reglas de validación y checklists.</li>
-            <li><strong>Aprobaciones</strong> en serie/paralelo; sustituciones por vacaciones y escalamiento.</li>
-            <li><strong>Plantillas</strong> (contratos, actas) y generación de PDFs con variables.</li>
-          </ul>
-        </section>
+      {/* Qué obtienes */}
+      <section
+        className="pt-10 mt-10 border-t border-slate-200"
+        aria-labelledby="obtienes-landing"
+      >
+        <h2 id="obtienes-landing" className="text-2xl font-bold">
+          ¿Qué obtienes exactamente?
+        </h2>
+        <ul className="mt-4 space-y-2 list-disc pl-6 text-justify">
+          <li>
+            <strong>Story y copy</strong> orientados a problema→solución→prueba social→CTA.
+          </li>
+          <li>
+            <strong>Diseño responsivo</strong> con componentes reutilizables y jerarquía clara.
+          </li>
+          <li>
+            <strong>Formularios</strong> con validación server-side, anti-spam y <em>tracking</em> de eventos.
+          </li>
+          <li>
+            <strong>SEO técnico</strong> (metadatos, OG/Twitter, sitemap/robots, canonical, datos estructurados).
+          </li>
+          <li>
+            <strong>Medición</strong>: GA4 (view/scroll/clic/envío), objetivos y tablero de KPIs sugerido.
+          </li>
+          <li>
+            <strong>Documentación</strong> operativa y guía para experimentos A/B.
+          </li>
+        </ul>
+      </section>
 
-        {/* 5. Arquitectura y decisiones */}
-        <section className="pt-10 mt-10 border-t border-slate-200">
-          <h2>Arquitectura y decisiones</h2>
-          <ul>
-            <li>
-              <strong>Renderizado:</strong> <code>SSG/ISR</code> para listados base y <code>SSR</code> selectivo en paneles
-              con datos frescos.
-            </li>
-            <li>
-              <strong>Persistencia:</strong> <code>PostgreSQL</code> + <code>Prisma</code> (documentos, versiones, flujos, auditoría).
-            </li>
-            <li>
-              <strong>Archivos:</strong> S3/Cloudflare R2 con <em>pre-signed URLs</em> y cifrado en reposo/transporte.
-            </li>
-            <li>
-              <strong>Integraciones:</strong> webhooks para publicar eventos en ERP/DMS; colas para reintentos y DLQ.
-            </li>
-            <li>
-              <strong>Caché:</strong> revalidación selectiva por etiquetas ante cambios de estado/contenido.
-            </li>
-          </ul>
-        </section>
+      {/* Alcance y opciones */}
+      <section
+        className="pt-10 mt-10 border-t border-slate-200"
+        aria-labelledby="alcance-landing"
+      >
+        <h2 id="alcance-landing" className="text-2xl font-bold">
+          Alcance y opciones
+        </h2>
 
-        {/* 6. Seguridad y cumplimiento */}
-        <section className="pt-10 mt-10 border-t border-slate-200">
-          <h2>Seguridad y cumplimiento</h2>
-          <ul>
-            <li>Autenticación OIDC/OAuth2 (NextAuth). Cookies seguras (<code>HttpOnly</code>, <code>SameSite</code>, <code>Secure</code>).</li>
-            <li>RBAC con mínimo privilegio y segregación de funciones (SoD) para aprobaciones.</li>
-            <li>CSP, HSTS, control de tipo MIME; validación server-side (Zod) y sanitización.</li>
-            <li>Auditoría <em>append-only</em> con firma de eventos críticos y verificación de integridad.</li>
-          </ul>
-        </section>
+        <h3 className="mt-4 text-xl font-semibold">Alcance base</h3>
+        <ul className="mt-2 space-y-2 list-disc pl-6 text-justify">
+          <li>Secciones: Hero, Beneficios, Social proof, Detalle, FAQs, CTA.</li>
+          <li>Accesibilidad (WCAG AA) y contenidos editables.</li>
+          <li>Despliegue en Vercel (o equivalente), dominio y SSL.</li>
+        </ul>
 
-        {/* 7. Gobierno de datos */}
-        <section className="pt-10 mt-10 border-t border-slate-200">
-          <h2>Gobierno de datos</h2>
-          <ul>
-            <li>Políticas de retención/expurgo por tipo documental y sensibilidad.</li>
-            <li>Minimización de PII y catalogación de metadatos para búsquedas eficientes.</li>
-            <li>Backups automatizados y pruebas de restauración; versionado de esquemas.</li>
-          </ul>
-        </section>
+        <h3 className="mt-6 text-xl font-semibold">Opcionales frecuentes</h3>
+        <ul className="mt-2 space-y-2 list-disc pl-6 text-justify">
+          <li>Pruebas A/B y banderas de características.</li>
+          <li>Integración con CRM/marketing automation por API o webhooks.</li>
+          <li>Mapas de calor y grabaciones de sesión (ej. Hotjar/Clarity).</li>
+          <li>Multi-idioma (i18n) y localización.</li>
+        </ul>
+      </section>
 
-        {/* 8. Observabilidad */}
-        <section className="pt-10 mt-10 border-t border-slate-200">
-          <h2>Observabilidad</h2>
-          <ul>
-            <li>Logs estructurados y <em>tracing</em> (OpenTelemetry/Sentry) para flujos y errores.</li>
-            <li>Métricas de tiempos de ciclo por etapa; SLA de aprobaciones y salud de webhooks/colas.</li>
-            <li>Alertas por vencimientos, rechazos repetidos o fallas de integración.</li>
-          </ul>
-        </section>
+      {/* Proceso */}
+      <section
+        className="pt-10 mt-10 border-t border-slate-200"
+        aria-labelledby="proceso-landing"
+      >
+        <h2 id="proceso-landing" className="text-2xl font-bold">
+          Cómo trabajamos
+        </h2>
+        <ol className="mt-4 space-y-2 list-decimal pl-6 text-justify">
+          <li><strong>Descubrimiento</strong>: audiencia, propuesta, objeciones, KPIs.</li>
+          <li><strong>UX/UI</strong>: wireframes, diseño visual y revisión colaborativa.</li>
+          <li><strong>Implementación</strong>: Next.js con CI/CD y entornos de <em>preview</em>.</li>
+          <li><strong>QA</strong>: funcional, accesibilidad y rendimiento (Web Vitals).</li>
+          <li><strong>Go-Live & handover</strong>: despliegue, documentación y capacitación.</li>
+        </ol>
+      </section>
 
-        {/* 9. Resultados esperables */}
-        <section className="pt-10 mt-10 border-t border-slate-200">
-          <h2>Resultados esperables</h2>
-          <ul>
-            <li>Reducción del tiempo de aprobación mediante automatización y SLA visibles.</li>
-            <li>Disminución de reprocesos por control de versiones y checklists de calidad.</li>
-            <li>Auditorías más ágiles gracias a la trazabilidad completa y la evidencia centralizada.</li>
-          </ul>
-        </section>
+      {/* Base técnica */}
+      <section
+        className="pt-10 mt-10 border-t border-slate-200"
+        aria-labelledby="tecnica-landing"
+      >
+        <h2 id="tecnica-landing" className="text-2xl font-bold">
+          Base técnica
+        </h2>
+        <ul className="mt-4 space-y-2 list-disc pl-6 text-justify">
+          <li>
+            <strong>Next.js (App Router)</strong> con <strong>SSG/ISR</strong> y <strong>SSR</strong> cuando aplique.
+          </li>
+          <li>
+            <strong>Optimización de imágenes</strong> con <code>next/image</code> y control de prioridad para LCP.
+          </li>
+          <li>
+            <strong>Accesibilidad</strong>: semántica, foco visible, ARIA y navegación por teclado.
+          </li>
+          <li>
+            <strong>Seguridad</strong>: validación server-side (Zod), rate-limit, honeypots y cabeceras (CSP/HSTS).
+          </li>
+          <li>
+            <strong>Infraestructura</strong>: CDN/edge, caching efectivo, dominios/SSL administrados.
+          </li>
+        </ul>
+      </section>
 
-        {/* 10. Stack */}
-        <section className="pt-10 mt-10 border-t border-slate-200">
-          <h2>Stack tecnológico</h2>
-          <ul>
-            <li>Next.js, React 18, Tailwind</li>
-            <li>Node.js (NestJS/Express), Prisma, PostgreSQL</li>
-            <li>NextAuth (OIDC/OAuth2), Zod</li>
-            <li>S3/Cloudflare R2 para archivos con URLs firmadas</li>
-            <li>Sentry / OpenTelemetry para monitoreo</li>
-          </ul>
-        </section>
+      {/* FAQs visibles (coherentes con JSON-LD) */}
+      <section
+        className="pt-10 mt-10 border-t border-slate-200"
+        aria-labelledby="faq-landing"
+      >
+        <h2 id="faq-landing" className="text-2xl font-bold">
+          Preguntas frecuentes
+        </h2>
 
-        {/* 11. Preguntas frecuentes */}
-        <section className="pt-10 mt-10 border-t border-slate-200">
-          <h2>Preguntas frecuentes</h2>
-          <h3>¿Se pueden definir workflows distintos por tipo de documento?</h3>
-          <p>Sí, cada tipo puede tener estados, reglas, SLA y aprobadores específicos.</p>
-          <h3>¿Cómo se gestionan las vacaciones o sustituciones?</h3>
-          <p>Soportamos delegaciones temporales y escalamiento automático según SLA.</p>
-          <h3>¿Las firmas son legalmente válidas?</h3>
-          <p>Integramos proveedores de firma electrónica avanzada/DS para jurisdicciones que lo requieran.</p>
-        </section>
+        <div className="mt-4 space-y-4">
+          <div>
+            <h3 className="text-lg font-semibold">¿Podemos hacer pruebas A/B?</h3>
+            <p className="text-justify">
+              Sí. Instrumentamos variantes y medimos con GA4 o herramientas dedicadas; definimos hipótesis y criterios de éxito.
+            </p>
+          </div>
 
-        {/* CTAs */}
-        <div className="pt-10 mt-10 border-t border-slate-200 not-prose flex flex-wrap gap-3">
-          <Button asChild size="lg" className="rounded-2xl">
-            <Link href="/#contact">Solicitar propuesta</Link>
-          </Button>
-          <Button asChild variant="ghost" size="lg" className="rounded-2xl">
-            <Link href="/">← Ir al inicio</Link>
-          </Button>
+          <div>
+            <h3 className="text-lg font-semibold">
+              ¿Se integra con mi CRM o con formularios externos?
+            </h3>
+            <p className="text-justify">
+              Sí. Integramos CRMs y automatizaciones por API o webhooks, incluyendo doble opt-in si es necesario.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold">¿Cómo se mide la conversión?</h3>
+            <p className="text-justify">
+              Configuramos eventos en GA4 (view, scroll, clics, envíos) y proponemos un dashboard de embudo con KPIs.
+            </p>
+          </div>
         </div>
+      </section>
+
+      {/* CTAs */}
+      <div className="pt-10 mt-10 border-t border-slate-200 not-prose flex flex-wrap gap-3">
+        <Button asChild size="lg" className="rounded-2xl">
+          <Link href="/#contact">Solicitar propuesta</Link>
+        </Button>
+        <Button asChild variant="ghost" size="lg" className="rounded-2xl">
+          <Link href="/">← Ir al inicio</Link>
+        </Button>
       </div>
     </article>
   );

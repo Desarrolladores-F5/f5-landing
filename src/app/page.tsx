@@ -27,23 +27,14 @@ import {
   ChevronRight,
 } from "lucide-react";
 import RotatingBadge3D from "@/components/RotatingBadge3D";
+import BrandLogo from "@/components/BrandLogo"; // ✅ Logo UpF5
 
 /* ==========================================================================
    ARCHIVO: F5Landing.tsx (Página principal)
-   PROPÓSITO: Estructura base con marcadores por sección para iteraciones.
-   CONVENCIÓN DE COMENTARIOS:
-   - [SECCIÓN] Delimitador mayor para navegación de código.
-   - TODO(sección): Lista técnica de pendientes.
-   - NOTE: consideraciones o decisiones arquitectónicas.
    ========================================================================== */
 
 /* ==========================================================================
-   [SECCIÓN] Helper: ButtonLink
-   - Evita anidar <a> dentro de <button> y viceversa. Mantiene accesibilidad.
-   - Reusar para CTA internos/externos.
-   TODO(helpers):
-   - Permitir target="_blank" con rel="noopener" cuando href sea externo.
-   - Variantes adicionales para estado "loading".
+   Helper: ButtonLink (CTA accesible)
    ========================================================================== */
 function ButtonLink({
   href,
@@ -68,9 +59,7 @@ function ButtonLink({
 }
 
 /* -------------------------------------------------------------------------- */
-/* Paleta y helpers                                                           */
-/* NOTE: Centralizar tokens de marca.                                        */
-/* TODO(theme): mover a /src/styles/tokens.ts y consumir via clase utilitaria */
+/* Paleta (tokens mínimos)                                                    */
 /* -------------------------------------------------------------------------- */
 const brand = {
   primary: "from-slate-900 via-blue-800 to-slate-900",
@@ -79,10 +68,7 @@ const brand = {
 };
 
 /* -------------------------------------------------------------------------- */
-/* [SECCIÓN] Slides del carrusel (Hero)                                       */
-/* TODO(hero):
-   - Parametrizar desde CMS/archivo JSON.
-   - Añadir texto por slide (headline, subcopy, CTA opcional).               */
+/* Hero Slides                                                                */
 /* -------------------------------------------------------------------------- */
 const heroSlides = [
   { src: "/images/hero/hero1.jpg", alt: "Proyecto web corporativo" },
@@ -91,10 +77,7 @@ const heroSlides = [
 ];
 
 /* -------------------------------------------------------------------------- */
-/* [SECCIÓN] Productos (catálogo de 6)                                        */
-/* TODO(productos):
-   - Sustituir imágenes de stock por renders reales.
-   - Integrar página de detalle por producto con FAQ/CTA.                    */
+/* Productos                                                                  */
 /* -------------------------------------------------------------------------- */
 const productosItems = [
   { src: "/images/productos/p1.jpg", title: "Web Corporativa",     href: "/productos/web" },
@@ -106,10 +89,7 @@ const productosItems = [
 ];
 
 /* -------------------------------------------------------------------------- */
-/* [SECCIÓN] Portfolio (badges 3D)                                            */
-/* NOTE: Usa RotatingBadge3D con texturas actuales; mantener pesos ligeros.  */
-/* TODO(portfolio):
-   - Cargar logos desde /public o CDN con versiones WebP/AVIF.               */
+/* Portfolio                                                                  */
 /* -------------------------------------------------------------------------- */
 type PortfolioLogo = { name: string; texture: string; href: string; alt: string };
 const portfolioLogos: readonly PortfolioLogo[] = [
@@ -119,9 +99,7 @@ const portfolioLogos: readonly PortfolioLogo[] = [
 ] as const;
 
 /* -------------------------------------------------------------------------- */
-/* [SECCIÓN] Blog (tipado explícito)                                          */
-/* TODO(blog):
-   - Conectar a fuente real (MDX/CMS).                                      */
+/* Blog                                                                       */
 /* -------------------------------------------------------------------------- */
 type BlogPost = {
   title: string;
@@ -152,45 +130,17 @@ const blogPosts: BlogPost[] = [
 ];
 
 /* -------------------------------------------------------------------------- */
-/* [SECCIÓN] Servicios                                                         */
-/* TODO(servicios):
-   - Convertir en cards clicables hacia formularios pre-llenados (utm).
-   - Medir clics con events (analytics).                                     */
+/* Servicios                                                                  */
 /* -------------------------------------------------------------------------- */
 const services = [
-  { 
-    icon: Code2, 
-    title: "Desarrollo Web",              
-    desc: "Sitios modernos, e-commerce y apps con SEO y rendimiento optimizado.", 
-    href: "#contact" 
-  },
-  { 
-    icon: Lock,  
-    title: "Apps y Automatización",       
-    desc: "Automatización con apps móviles, bots, RPA y generación de documentos.", 
-    href: "#contact" 
-  },
-  { 
-    icon: Cog,   
-    title: "Plataformas e Integraciones", 
-    desc: "Conectamos APIs, sistemas y flujos de trabajo para que todo funcione en conjunto.",  
-    href: "#contact" 
-  },
-  { 
-    icon: Shield,
-    title: "Seguridad Aplicativa",        
-    desc: "Hardening, monitoreo continuo, autenticación y control de accesos seguros.", 
-    href: "#contact" 
-  },
+  { icon: Code2, title: "Desarrollo Web", desc: "Sitios modernos, e-commerce y apps con SEO y rendimiento optimizado.", href: "#contact" },
+  { icon: Lock,  title: "Apps y Automatización", desc: "Automatización con apps móviles, bots, RPA y generación de documentos.", href: "#contact" },
+  { icon: Cog,   title: "Plataformas e Integraciones", desc: "Conectamos APIs, sistemas y flujos de trabajo para que todo funcione en conjunto.", href: "#contact" },
+  { icon: Shield,title: "Seguridad Aplicativa", desc: "Hardening, monitoreo continuo, autenticación y control de accesos seguros.", href: "#contact" },
 ] as const;
 
 /* -------------------------------------------------------------------------- */
-/* [SECCIÓN] Componente: Carrusel ligero (Hero)                               */
-/* NOTE: Animación discreta; accesible con botones prev/next y dots.          */
-/* TODO(hero-carousel):
-   - Pausar con foco por accesibilidad.
-   - Soporte de swipe en móvil.
-   - SSR-friendly (verificar transición en first paint).                     */
+/* Componente: Carrusel del Hero                                              */
 /* -------------------------------------------------------------------------- */
 function HeroCarousel() {
   const [index, setIndex] = useState<number>(0);
@@ -205,7 +155,6 @@ function HeroCarousel() {
     if (paused || total <= 1) return;
     const id = setInterval(next, 5000);
     return () => clearInterval(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paused, total]);
 
   return (
@@ -238,7 +187,7 @@ function HeroCarousel() {
           </div>
         ))}
 
-        {/* Controles de paginación y navegación */}
+        {/* Controles */}
         <div className="absolute inset-x-0 bottom-0 p-3 flex items-center justify-between gap-2">
           <div className="flex items-center gap-1">
             {heroSlides.map((_, i) => (
@@ -277,8 +226,7 @@ function HeroCarousel() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* [SECCIÓN] Componente: Logo flotante (opcional/reutilizable)                */
-/* NOTE: Se conserva para usos futuros en otras secciones.                    */
+/* (Opcional) Logo flotante reutilizable                                      */
 /* -------------------------------------------------------------------------- */
 function FloatingLogo({ src, alt }: { src: string; alt: string }) {
   return (
@@ -309,14 +257,10 @@ function FloatingLogo({ src, alt }: { src: string; alt: string }) {
 }
 
 /* -------------------------------------------------------------------------- */
-/* [SECCIÓN] Página principal                                                  */
-/* NOTE: Las secciones están marcadas con IDs para navegación y mejora por UI */
-/* TODO(page):
-   - Añadir analytics de scroll/visibilidad.
-   - Extraer cada sección a componentes independientes en /sections.         */
+/* Página principal                                                            */
 /* -------------------------------------------------------------------------- */
 export default function F5Landing() {
-  // Smooth scroll para anclas internas
+  // Smooth scroll para anclas
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement | null;
@@ -336,19 +280,16 @@ export default function F5Landing() {
   return (
     <div className="min-h-screen antialiased bg-gradient-to-b from-slate-50 to-white text-slate-900">
       {/* =================================================================== */}
-      {/* [SECCIÓN] NAVBAR                                                    */}
-      {/* OBJETIVO: Navegación sticky con CTA primario "Cotizar".             */}
-      {/* TODO(navbar):
-          - Resumen móvil (hamburger) con Drawer.
-          - Estado activo por hash.
-          - Soporte i18n (en/es).                                           */}
+      {/* NAVBAR */}
       {/* =================================================================== */}
       <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 bg-white/60 border-b border-slate-200/70">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="#home" className="font-semibold tracking-tight text-xl">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-cyan-500">UpF5</span>
-          </Link>
-          <nav className="hidden md:flex gap-2 text-sm">
+        {/* ↑ Aumentamos altura para acomodar tipografía mayor */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+          {/* Marca */}
+          <BrandLogo width={160} height={46} />
+
+          {/* Menú con tipografía mayor + hover azul/cian */}
+          <nav className="hidden md:flex gap-3 text-base md:text-lg">
             {[
               ["Nosotros", "#about"],
               ["Servicios", "#services"],
@@ -361,16 +302,29 @@ export default function F5Landing() {
                 key={label}
                 href={href}
                 variant="ghost"
-                size="sm"
+                size="default"
+                className="
+                  rounded-xl font-medium text-base md:text-lg
+                  transition-colors
+                  hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-500 hover:text-white
+                  focus-visible:ring-2 focus-visible:ring-blue-600
+                "
                 ariaLabel={`Ir a ${label}`}
-                className="rounded-xl"
               >
                 {label}
               </ButtonLink>
             ))}
           </nav>
+
           <div className="flex items-center gap-3">
-            <ButtonLink href="#contact" className="rounded-2xl shadow-sm" size="sm">
+            <ButtonLink
+              href="#contact"
+              size="default"
+              className="
+                rounded-2xl shadow-sm font-semibold text-base md:text-lg
+                focus-visible:ring-2 focus-visible:ring-blue-600
+              "
+            >
               Cotizar
             </ButtonLink>
           </div>
@@ -378,12 +332,7 @@ export default function F5Landing() {
       </header>
 
       {/* =================================================================== */}
-      {/* [SECCIÓN] HERO                                                      */}
-      {/* OBJETIVO: Mensaje principal + carrusel visual + 3 bullets de valor. */}
-      {/* KPIs: CTR en CTA, tiempo en sección, interacción con carrusel.      */}
-      {/* TODO(hero):
-          - A/B test de titulares y subtítulos.
-          - CTA secundario (ver portfolio/demo).                             */}
+      {/* HERO */}
       {/* =================================================================== */}
       <section id="home" className="relative overflow-hidden">
         <div className={`absolute inset-0 bg-gradient-to-r ${brand.primary} opacity-10`} />
@@ -424,105 +373,99 @@ export default function F5Landing() {
         </div>
       </section>
 
-        {/* =================================================================== */}
-        {/* [SECCIÓN] NOSOTROS + STACK                                          */}
-        {/* OBJETIVO: Autoridad técnica y metodología.                           */}
-        {/* =================================================================== */}
-<section id="about" className="py-20">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-stretch">
-    {/* Columna IZQ: Sobre Nosotros (Card con misma proporción que el Stack) */}
-    <div className="relative">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-600/10 via-cyan-500/10 to-blue-600/10 blur-2xl rounded-[2rem]" />
-      <div className="rounded-[1.6rem] p-[1px] bg-gradient-to-br from-blue-600/60 via-cyan-500/60 to-blue-600/60 h-full">
-        <Card className="rounded-[1.5rem] border-slate-200/60 overflow-hidden h-full flex flex-col">
-          <CardHeader className="border-b border-slate-200/60 bg-gradient-to-r from-slate-50 to-white">
-            <CardTitle className="flex items-center justify-between">
-              <span>Sobre Nosotros</span>
-              <span className="text-xs px-2 py-1 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white">
-                Ingeniería de Software
-              </span>
-            </CardTitle>
-          </CardHeader>
+      {/* =================================================================== */}
+      {/* NOSOTROS + STACK */}
+      {/* =================================================================== */}
+      <section id="about" className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-stretch">
+          {/* IZQ: Sobre Nosotros */}
+          <div className="relative">
+            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-600/10 via-cyan-500/10 to-blue-600/10 blur-2xl rounded-[2rem]" />
+            <div className="rounded-[1.6rem] p-[1px] bg-gradient-to-br from-blue-600/60 via-cyan-500/60 to-blue-600/60 h-full">
+              <Card className="rounded-[1.5rem] border-slate-200/60 overflow-hidden h-full flex flex-col">
+                <CardHeader className="border-b border-slate-200/60 bg-gradient-to-r from-slate-50 to-white">
+                  <CardTitle className="flex items-center justify-between">
+                    <span>Sobre Nosotros</span>
+                    <span className="text-xs px-2 py-1 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white">
+                      Ingeniería de Software
+                    </span>
+                  </CardTitle>
+                </CardHeader>
 
-          <CardContent className="p-6 grow">
-            <p className="text-slate-600 text-justify leading-relaxed w-full">
-              Somos un equipo especializado en <strong>ingeniería de software</strong> que cubre diseño UX/UI,
-              desarrollo full-stack, APIs e integraciones. Trabajamos con metodologías ágiles, calidad continua y
-              <em> DevSecOps</em> para entregar productos <strong>confiables, escalables y medibles</strong>, con
-              trazabilidad de cambios, automatización de despliegues (CI/CD) y observabilidad de extremo a extremo.
-              Priorizamos <strong>seguridad por diseño</strong>, estándares de codificación y documentación operable.
-            </p>
+                <CardContent className="p-6 grow">
+                  <p className="text-slate-600 text-justify leading-relaxed w-full">
+                    Somos un equipo especializado en <strong>ingeniería de software</strong> que cubre diseño UX/UI,
+                    desarrollo full-stack, APIs e integraciones. Trabajamos con metodologías ágiles, calidad continua y
+                    <em> DevSecOps</em> para entregar productos <strong>confiables, escalables y medibles</strong>, con
+                    trazabilidad de cambios, automatización de despliegues (CI/CD) y observabilidad de extremo a extremo.
+                    Priorizamos <strong>seguridad por diseño</strong>, estándares de codificación y documentación operable.
+                  </p>
 
-            <ul className="mt-6 space-y-3 text-slate-700 list-disc pl-5 text-justify leading-relaxed w-full">
-              <li><strong>Descubrimiento y UX/UI</strong>: investigación, wireframes, design system y validación.</li>
-              <li><strong>Desarrollo full-stack y APIs</strong>: arquitectura modular, pruebas y contratos claros.</li>
-              <li><strong>DevSecOps, CI/CD y observabilidad</strong>: pipelines, monitoreo y respuesta a incidentes.</li>
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-
-    {/* Columna DER: Stack preferente (se mantiene, ajustando altura) */}
-    <div className="relative">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-600/10 via-cyan-500/10 to-blue-600/10 blur-2xl rounded-[2rem]" />
-      <div className="rounded-[1.6rem] p-[1px] bg-gradient-to-br from-blue-600/60 via-cyan-500/60 to-blue-600/60 h-full">
-        <Card className="rounded-[1.5rem] border-slate-200/60 overflow-hidden h-full">
-          <CardHeader className="border-b border-slate-200/60 bg-gradient-to-r from-slate-50 to-white">
-            <CardTitle className="flex items-center justify-between">
-              <span>Stack preferente</span>
-              <span className="text-xs px-2 py-1 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white">
-                React + Next.js
-              </span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-5">
-            <div className="grid sm:grid-cols-2 gap-4">
-              {[
-                { icon: Code2, title: "Frontend", desc: "React 18, Next.js 15 (App Router), Tailwind, shadcn/ui", chips: ["React", "Next.js", "Tailwind", "shadcn/ui"] },
-                { icon: Cog,   title: "Backend",  desc: "Node.js, NestJS/Express, Prisma, REST/GraphQL",        chips: ["Node.js", "NestJS", "Prisma", "GraphQL"] },
-                { icon: Shield,title: "Seguridad",desc: "OAuth2/NextAuth, JWT, OWASP ASVS, rate-limit",         chips: ["OAuth2", "JWT", "OWASP", "Zod"] },
-                { icon: Globe, title: "Infra",    desc: "Vercel, Docker, S3/Cloudflare, observabilidad",        chips: ["Vercel", "Docker", "S3", "CDN"] },
-              ].map(({ icon: Icon, title, desc, chips }) => (
-                <motion.div
-                  key={title}
-                  whileHover={{ y: -3 }}
-                  transition={{ type: "spring", stiffness: 250, damping: 20 }}
-                  className="rounded-2xl p-[1px] bg-gradient-to-br from-slate-200 via-slate-100 to-slate-200 h-full"
-                >
-                  <div className="p-4 rounded-[1.05rem] bg-white border border-slate-200 h-full">
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white ring-1 ring-black/10 flex items-center justify-center">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <p className="font-medium">{title}</p>
-                    </div>
-                    <p className="text-slate-500 mt-2 text-sm text-justify leading-relaxed w-full">{desc}</p>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {chips.map((c) => (
-                        <span key={c} className="text-[11px] px-2 py-1 rounded-full bg-gradient-to-r from-blue-600/10 to-cyan-500/10 text-slate-700 border border-slate-200">
-                          {c}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                  <ul className="mt-6 space-y-3 text-slate-700 list-disc pl-5 text-justify leading-relaxed w-full">
+                    <li><strong>Descubrimiento y UX/UI</strong>: investigación, wireframes, design system y validación.</li>
+                    <li><strong>Desarrollo full-stack y APIs</strong>: arquitectura modular, pruebas y contratos claros.</li>
+                    <li><strong>DevSecOps, CI/CD y observabilidad</strong>: pipelines, monitoreo y respuesta a incidentes.</li>
+                  </ul>
+                </CardContent>
+              </Card>
             </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  </div>
-</section>
+          </div>
 
+          {/* DER: Stack preferente */}
+          <div className="relative">
+            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-600/10 via-cyan-500/10 to-blue-600/10 blur-2xl rounded-[2rem]" />
+            <div className="rounded-[1.6rem] p-[1px] bg-gradient-to-br from-blue-600/60 via-cyan-500/60 to-blue-600/60 h-full">
+              <Card className="rounded-[1.5rem] border-slate-200/60 overflow-hidden h-full">
+                <CardHeader className="border-b border-slate-200/60 bg-gradient-to-r from-slate-50 to-white">
+                  <CardTitle className="flex items-center justify-between">
+                    <span>Stack preferente</span>
+                    <span className="text-xs px-2 py-1 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white">
+                      React + Next.js
+                    </span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-5">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {[
+                      { icon: Code2, title: "Frontend", desc: "React 18, Next.js 15 (App Router), Tailwind, shadcn/ui", chips: ["React", "Next.js", "Tailwind", "shadcn/ui"] },
+                      { icon: Cog,   title: "Backend",  desc: "Node.js, NestJS/Express, Prisma, REST/GraphQL",        chips: ["Node.js", "NestJS", "Prisma", "GraphQL"] },
+                      { icon: Shield,title: "Seguridad",desc: "OAuth2/NextAuth, JWT, OWASP ASVS, rate-limit",         chips: ["OAuth2", "JWT", "OWASP", "Zod"] },
+                      { icon: Globe, title: "Infra",    desc: "Vercel, Docker, S3/Cloudflare, observabilidad",        chips: ["Vercel", "Docker", "S3", "CDN"] },
+                    ].map(({ icon: Icon, title, desc, chips }) => (
+                      <motion.div
+                        key={title}
+                        whileHover={{ y: -3 }}
+                        transition={{ type: "spring", stiffness: 250, damping: 20 }}
+                        className="rounded-2xl p-[1px] bg-gradient-to-br from-slate-200 via-slate-100 to-slate-200 h-full"
+                      >
+                        <div className="p-4 rounded-[1.05rem] bg-white border border-slate-200 h-full">
+                          <div className="flex items-center gap-3">
+                            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white ring-1 ring-black/10 flex items-center justify-center">
+                              <Icon className="h-5 w-5" />
+                            </div>
+                            <p className="font-medium">{title}</p>
+                          </div>
+                          <p className="text-slate-500 mt-2 text-sm text-justify leading-relaxed w-full">{desc}</p>
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {chips.map((c) => (
+                              <span key={c} className="text-[11px] px-2 py-1 rounded-full bg-gradient-to-r from-blue-600/10 to-cyan-500/10 text-slate-700 border border-slate-200">
+                                {c}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* =================================================================== */}
-      {/* [SECCIÓN] SERVICIOS                                                 */}
-      {/* OBJETIVO: Ofertas paquetizadas con CTA hacia contacto/cotización.    */}
-      {/* TODO(servicios-ui):
-          - Hover states con microinteracciones.
-          - Tags de SLA/tiempos de entrega.                                   */}
+      {/* SERVICIOS */}
       {/* =================================================================== */}
       <section id="services" className="py-20 bg-slate-50 border-y">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -566,11 +509,7 @@ export default function F5Landing() {
       </section>
 
       {/* =================================================================== */}
-      {/* [SECCIÓN] PRODUCTOS                                                 */}
-      {/* OBJETIVO: Catálogo de soluciones listas para implementar.            */}
-      {/* TODO(productos-grid):
-          - Filtros por categoría.
-          - Badges (nuevo, popular, en oferta).                               */}
+      {/* PRODUCTOS */}
       {/* =================================================================== */}
       <section id="productos" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -610,18 +549,14 @@ export default function F5Landing() {
       </section>
 
       {/* =================================================================== */}
-      {/* [SECCIÓN] PORTFOLIO                                                 */}
-      {/* OBJETIVO: Mostrar marcas/productos clave con elemento 3D interactivo.*/}
-      {/* TODO(portfolio-ux):
-          - Tooltips con descripción breve.
-          - Enlaces a estudios de caso con métricas.                          */}
+      {/* PORTFOLIO */}
       {/* =================================================================== */}
       <section id="portfolio" className="py-20 bg-slate-50 border-y">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold tracking-tight">Portfolio</h2>
           <p className="mt-3 text-slate-600">Nuestros principales productos y marcas.</p>
 
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
             {portfolioLogos.map((item) => (
               <div key={item.href} className="flex flex-col items-center text-center">
                 <h3 className="text-lg font-semibold mb-3">{item.name}</h3>
@@ -650,11 +585,7 @@ export default function F5Landing() {
       </section>
 
       {/* =================================================================== */}
-      {/* [SECCIÓN] BLOG                                                      */}
-      {/* OBJETIVO: Tráfico orgánico y autoridad técnica.                      */}
-      {/* TODO(blog-cards):
-          - Paginación/infinite scroll.
-          - Card "destacado" (sticky).                                        */}
+      {/* BLOG */}
       {/* =================================================================== */}
       <section id="blog" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -699,11 +630,7 @@ export default function F5Landing() {
       </section>
 
       {/* =================================================================== */}
-      {/* [SECCIÓN] CONTACTO                                                  */}
-      {/* OBJETIVO: Captación de leads. Validaciones mínimas + CTA claro.      */}
-      {/* TODO(contacto):
-          - Conectar a /api/contact con persistencia y envío por email.
-          - Añadir honeypot/captcha; estados de éxito/error.                   */}
+      {/* CONTACTO */}
       {/* =================================================================== */}
       <section id="contact" className="py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -740,15 +667,14 @@ export default function F5Landing() {
       </section>
 
       {/* =================================================================== */}
-      {/* [SECCIÓN] FOOTER                                                    */}
-      {/* OBJETIVO: Información legal/social, cierre visual.                    */}
-      {/* TODO(footer):
-          - Sustituir enlaces # por URLs reales.
-          - Añadir enlace a políticas y términos.                              */}
+      {/* FOOTER */}
       {/* =================================================================== */}
       <footer className="border-t">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid md:grid-cols-2 gap-6 items-center">
-          <p className="text-sm text-slate-500">© {new Date().getFullYear()} F5. Todos los derechos reservados.</p>
+          <div className="flex items-center gap-3">
+            <BrandLogo width={120} height={36} priority={false} />
+            <p className="text-sm text-slate-500">© {new Date().getFullYear()} F5. Todos los derechos reservados.</p>
+          </div>
           <div className="flex justify-start md:justify-end gap-2">
             <Button asChild variant="ghost" size="icon" aria-label="GitHub">
               <Link href="#"><Github className="h-5 w-5" /></Link>
