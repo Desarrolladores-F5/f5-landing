@@ -652,7 +652,7 @@ export default function F5Landing() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4 text-slate-500 text-sm">
                 <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" /> +56 9 1234 5678
+                  <Phone className="h-4 w-4" /> +56 9 97837254
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4" /> contacto@f5.cl
@@ -674,23 +674,6 @@ export default function F5Landing() {
           <div className="flex items-center gap-3">
             <BrandLogo width={120} height={36} priority={false} />
             <p className="text-sm text-slate-500">© {new Date().getFullYear()} F5. Todos los derechos reservados.</p>
-          </div>
-          <div className="flex justify-start md:justify-end gap-2">
-            <Button asChild variant="ghost" size="icon" aria-label="GitHub">
-              <Link href="#"><Github className="h-5 w-5" /></Link>
-            </Button>
-            <Button asChild variant="ghost" size="icon" aria-label="LinkedIn">
-              <Link href="#"><Linkedin className="h-5 w-5" /></Link>
-            </Button>
-            <Button asChild variant="ghost" size="icon" aria-label="Facebook">
-              <Link href="#"><Facebook className="h-5 w-5" /></Link>
-            </Button>
-            <Button asChild variant="ghost" size="icon" aria-label="Twitter">
-              <Link href="#"><Twitter className="h-5 w-5" /></Link>
-            </Button>
-            <Button asChild variant="ghost" size="icon" aria-label="Instagram">
-              <Link href="#"><Instagram className="h-5 w-5" /></Link>
-            </Button>
           </div>
         </div>
       </footer>
