@@ -140,7 +140,7 @@ const services = [
 ] as const;
 
 /* -------------------------------------------------------------------------- */
-/* Componente: Carrusel del Hero                                              */
+/* Componente: Carrusel del Hero (alturas responsivas)                        */
 /* -------------------------------------------------------------------------- */
 function HeroCarousel() {
   const [index, setIndex] = useState<number>(0);
@@ -168,7 +168,7 @@ function HeroCarousel() {
       role="region"
       aria-label="Carrusel principal"
     >
-      <div className="relative rounded-3xl shadow-2xl ring-1 ring-slate-200 overflow-hidden h-80 md:h-96">
+      <div className="relative rounded-3xl shadow-2xl ring-1 ring-slate-200 overflow-hidden h-56 sm:h-64 md:h-80 lg:h-96">
         {heroSlides.map((s, i) => (
           <div
             key={s.src}
@@ -180,7 +180,7 @@ function HeroCarousel() {
               alt={s.alt}
               fill
               priority={i === 0}
-              sizes="(min-width: 1024px) 40rem, (min-width: 768px) 36rem, 100vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40rem"
               className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-br from-slate-900/10 to-slate-900/0" />
@@ -188,15 +188,15 @@ function HeroCarousel() {
         ))}
 
         {/* Controles */}
-        <div className="absolute inset-x-0 bottom-0 p-3 flex items-center justify-between gap-2">
+        <div className="absolute inset-x-0 bottom-0 p-2 sm:p-3 flex items-center justify-between gap-2">
           <div className="flex items-center gap-1">
             {heroSlides.map((_, i) => (
               <button
                 key={i}
                 onClick={() => goto(i)}
                 aria-label={`Ir al slide ${i + 1}`}
-                className={`h-2.5 w-2.5 rounded-full transition-all ${
-                  i === index ? "bg-white shadow ring-1 ring-black/10 w-6" : "bg-white/60 hover:bg-white/90"
+                className={`h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full transition-all ${
+                  i === index ? "bg-white shadow ring-1 ring-black/10 w-5 sm:w-6" : "bg-white/60 hover:bg-white/90"
                 }`}
               />
             ))}
@@ -205,14 +205,14 @@ function HeroCarousel() {
             <button
               onClick={prev}
               aria-label="Anterior"
-              className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-white/90 hover:bg-white shadow"
+              className="inline-flex items-center justify-center h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-white/90 hover:bg-white shadow"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
             <button
               onClick={next}
               aria-label="Siguiente"
-              className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-white/90 hover:bg-white shadow"
+              className="inline-flex items-center justify-center h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-white/90 hover:bg-white shadow"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
@@ -220,7 +220,7 @@ function HeroCarousel() {
         </div>
       </div>
 
-      <ChevronDown className="absolute -bottom-8 left-1/2 -translate-x-1/2 h-8 w-8 text-slate-400" />
+      <ChevronDown className="hidden md:block absolute -bottom-8 left-1/2 -translate-x-1/2 h-8 w-8 text-slate-400" />
     </motion.div>
   );
 }
@@ -283,12 +283,16 @@ export default function F5Landing() {
       {/* NAVBAR */}
       {/* =================================================================== */}
       <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 bg-white/60 border-b border-slate-200/70">
-        {/* ↑ Aumentamos altura para acomodar tipografía mayor */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          {/* Marca */}
-          <BrandLogo width={160} height={46} />
+        {/* ↑ Ajuste de alturas para contener el logo sin desbordes */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 md:h-20 flex items-center justify-between">
+          {/* Marca (logo responsivo por altura) */}
+          <div className="shrink-0 flex items-center">
+            <div className="h-10 md:h-12 lg:h-14">
+              <BrandLogo className="h-full w-auto" />
+            </div>
+          </div>
 
-          {/* Menú con tipografía mayor + hover azul/cian */}
+          {/* Menú */}
           <nav className="hidden md:flex gap-3 text-base md:text-lg">
             {[
               ["Nosotros", "#about"],
@@ -332,37 +336,45 @@ export default function F5Landing() {
       </header>
 
       {/* =================================================================== */}
-      {/* HERO */}
+      {/* HERO (responsivo + texto justificado) */}
       {/* =================================================================== */}
       <section id="home" className="relative overflow-hidden">
         <div className={`absolute inset-0 bg-gradient-to-r ${brand.primary} opacity-10`} />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 grid md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-4xl md:text-5xl font-extrabold tracking-tight"
+              className="font-extrabold tracking-tight text-slate-900
+                         text-3xl sm:text-4xl lg:text-5xl xl:text-6xl
+                         leading-[1.15] sm:leading-[1.12] lg:leading-[1.1]"
             >
-              Software, Apps y Web a Medida para tu Empresa
+              Software, Apps y Web a
+              <br className="hidden sm:block" />
+              Medida para tu Empresa
             </motion.h1>
-            <p className="mt-6 text-lg text-slate-600 max-w-prose">
+
+            <p className="mt-4 sm:mt-6 text-slate-700 max-w-prose
+                          text-base sm:text-lg lg:text-xl
+                          leading-relaxed sm:leading-7 text-justify">
               En <strong>UpF5</strong> diseñamos y desarrollamos soluciones digitales con foco en resultados: sitios web,
               e-commerce, apps y <strong>plataformas todo-en-uno</strong> sobre una arquitectura escalable,
               <em> security-by-design</em>, integraciones API y CI/CD para acelerar tu operación con calidad y
               trazabilidad.
             </p>
-            <div className="mt-8 flex items-center gap-6 text-sm text-slate-500">
+
+            <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm sm:text-[15px] text-slate-600">
               <div className="flex items-center gap-2">
-                <Shield className="h-4 w-4" />
+                <Shield className="h-4 w-4 sm:h-5 sm:w-5" />
                 Seguridad by design
               </div>
               <div className="flex items-center gap-2">
-                <Cog className="h-4 w-4" />
+                <Cog className="h-4 w-4 sm:h-5 sm:w-5" />
                 Integraciones API
               </div>
               <div className="flex items-center gap-2">
-                <Globe className="h-4 w-4" />
+                <Globe className="h-4 w-4 sm:h-5 sm:w-5" />
                 SEO/Accesibilidad
               </div>
             </div>
@@ -474,7 +486,7 @@ export default function F5Landing() {
             Desarrollamos soluciones de extremo a extremo. Selecciona un servicio para cotizar.
           </p>
 
-          <div className="mt-10 grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div className="mt-10 grid md:grid-cols-2 xl:grid-cols-4 gap-6">
             {services.map(({ icon: Icon, title, desc, href }) => (
               <Link
                 key={title}
@@ -556,7 +568,7 @@ export default function F5Landing() {
           <h2 className="text-3xl font-bold tracking-tight">Portfolio</h2>
           <p className="mt-3 text-slate-600">Nuestros principales productos y marcas.</p>
 
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
             {portfolioLogos.map((item) => (
               <div key={item.href} className="flex flex-col items-center text-center">
                 <h3 className="text-lg font-semibold mb-3">{item.name}</h3>
@@ -655,7 +667,7 @@ export default function F5Landing() {
                   <Phone className="h-4 w-4" /> +56 9 97837254
                 </div>
                 <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4" /> contacto@f5.cl
+                  <Mail className="h-4 w-4" /> contacto@upf5.com
                 </div>
               </div>
               <Button type="submit" className="rounded-2xl">
@@ -672,8 +684,10 @@ export default function F5Landing() {
       <footer className="border-t">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid md:grid-cols-2 gap-6 items-center">
           <div className="flex items-center gap-3">
-            <BrandLogo width={120} height={36} priority={false} />
-            <p className="text-sm text-slate-500">© {new Date().getFullYear()} F5. Todos los derechos reservados.</p>
+            <div className="h-9">
+              <BrandLogo className="h-full w-auto" priority={false} />
+            </div>
+            <p className="text-sm text-slate-500">© {new Date().getFullYear()} UpF5. Todos los derechos reservados.</p>
           </div>
         </div>
       </footer>
