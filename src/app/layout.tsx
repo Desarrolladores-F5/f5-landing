@@ -1,16 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {
-  // 👇 Base absoluta para construir las URLs de OG/Twitter
   metadataBase: new URL(siteUrl),
-
-  title: {
-    default: "UpF5",
-    template: "%s | UpF5",
-  },
+  title: { default: "UpF5", template: "%s | UpF5" },
   description: "Software, Apps y Web a medida para tu empresa.",
   icons: {
     icon: [
@@ -23,11 +18,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: "UpF5",
     description: "Software, Apps y Web a medida para tu empresa.",
-    url: "/",               // con metadataBase se resolverá a `${siteUrl}/`
+    url: "/",
     siteName: "UpF5",
-    images: [
-      { url: "/og/og-image.png", width: 1200, height: 630, alt: "UpF5" }, // se resuelve a absoluta
-    ],
+    images: [{ url: "/og/og-image.png", width: 1200, height: 630, alt: "UpF5" }],
     locale: "es_CL",
     type: "website",
   },
@@ -35,8 +28,16 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "UpF5",
     description: "Software, Apps y Web a medida para tu empresa.",
-    images: ["/og/og-image.png"], // también se resuelve con metadataBase
+    images: ["/og/og-image.png"],
   },
+};
+
+// 👇 Evita zooms y comportamientos raros en móvil
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

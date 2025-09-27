@@ -9,11 +9,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Github,
-  Linkedin,
-  Facebook,
-  Twitter,
-  Instagram,
   Mail,
   Phone,
   Globe,
@@ -27,15 +22,57 @@ import {
   ChevronRight,
 } from "lucide-react";
 import RotatingBadge3D from "@/components/RotatingBadge3D";
-import BrandLogo from "@/components/BrandLogo"; // ✅ Logo UpF5
+import BrandLogo from "@/components/BrandLogo";
 
-/* ==========================================================================
-   ARCHIVO: F5Landing.tsx (Página principal)
-   ========================================================================== */
+/* -------------------------------------------------------------------------- */
+/* Tokens simples                                                             */
+/* -------------------------------------------------------------------------- */
+const brand = {
+  primary: "from-slate-900 via-blue-800 to-slate-900",
+};
 
-/* ==========================================================================
-   Helper: ButtonLink (CTA accesible)
-   ========================================================================== */
+/* -------------------------------------------------------------------------- */
+/* Datos dummy                                                                */
+/* -------------------------------------------------------------------------- */
+const heroSlides = [
+  { src: "/images/hero/hero1.jpg", alt: "Proyecto web corporativo" },
+  { src: "/images/hero/hero2.jpg", alt: "Plataforma e integraciones" },
+  { src: "/images/hero/hero3.jpg", alt: "E-commerce escalable" },
+];
+
+const productosItems = [
+  { src: "/images/productos/p1.jpg", title: "Web Corporativa", href: "/productos/web" },
+  { src: "/images/productos/p2.jpg", title: "Landing Page", href: "/productos/landingpage" },
+  { src: "/images/productos/p3.jpg", title: "E-commerce", href: "/productos/e-commerce" },
+  { src: "/images/productos/p4.jpg", title: "App", href: "/productos/app" },
+  { src: "/images/productos/p5.jpg", title: "Plataforma", href: "/productos/plataforma" },
+  { src: "/images/productos/p6.jpg", title: "Academia Digital", href: "/productos/academia" },
+];
+
+type PortfolioLogo = { name: string; texture: string; href: string; alt: string };
+const portfolioLogos: readonly PortfolioLogo[] = [
+  { name: "Prisma", texture: "/images/portfolio/i1.png", href: "/portfolio/prisma", alt: "Logo Prisma 3D" },
+  { name: "Mi Vecino", texture: "/images/portfolio/i2.png", href: "/portfolio/mivecino", alt: "Logo Mi Vecino 3D" },
+  { name: "Áurea", texture: "/images/portfolio/i3.png", href: "/portfolio/aurea", alt: "Logo Áurea 3D" },
+] as const;
+
+type BlogPost = { title: string; href: string; img: string; alt: string };
+const blogPosts: BlogPost[] = [
+  { title: "Landing, Página o Sitio: ¿qué elegir?", href: "/blog/landing-vs-sitio", img: "/images/blog/b1.jpg", alt: "Comparativa entre landing page, página y sitio web" },
+  { title: "Mejores prácticas para CI/CD en Next.js", href: "/blog/cicd-nextjs", img: "/images/blog/b2.jpg", alt: "Pipeline de CI/CD" },
+  { title: "Autenticación moderna con NextAuth y JWT", href: "/blog/auth-nextauth-jwt", img: "/images/blog/b3.jpg", alt: "OAuth + JWT" },
+];
+
+const services = [
+  { icon: Code2, title: "Desarrollo Web", desc: "Sitios modernos, e-commerce y apps con SEO y rendimiento optimizado.", href: "#contact" },
+  { icon: Lock, title: "Apps y Automatización", desc: "Automatización con apps móviles, bots, RPA y generación de documentos.", href: "#contact" },
+  { icon: Cog, title: "Plataformas e Integraciones", desc: "Conectamos APIs, sistemas y flujos de trabajo para que todo funcione en conjunto.", href: "#contact" },
+  { icon: Shield, title: "Seguridad Aplicativa", desc: "Hardening, monitoreo continuo, autenticación y control de accesos seguros.", href: "#contact" },
+] as const;
+
+/* -------------------------------------------------------------------------- */
+/* Helper: ButtonLink                                                         */
+/* -------------------------------------------------------------------------- */
 function ButtonLink({
   href,
   children,
@@ -59,88 +96,7 @@ function ButtonLink({
 }
 
 /* -------------------------------------------------------------------------- */
-/* Paleta (tokens mínimos)                                                    */
-/* -------------------------------------------------------------------------- */
-const brand = {
-  primary: "from-slate-900 via-blue-800 to-slate-900",
-  accent: "from-blue-600 to-cyan-500",
-  textMuted: "text-slate-500",
-};
-
-/* -------------------------------------------------------------------------- */
-/* Hero Slides                                                                */
-/* -------------------------------------------------------------------------- */
-const heroSlides = [
-  { src: "/images/hero/hero1.jpg", alt: "Proyecto web corporativo" },
-  { src: "/images/hero/hero2.jpg", alt: "Plataforma e integraciones" },
-  { src: "/images/hero/hero3.jpg", alt: "E-commerce escalable" },
-];
-
-/* -------------------------------------------------------------------------- */
-/* Productos                                                                  */
-/* -------------------------------------------------------------------------- */
-const productosItems = [
-  { src: "/images/productos/p1.jpg", title: "Web Corporativa",     href: "/productos/web" },
-  { src: "/images/productos/p2.jpg", title: "Landing Page",        href: "/productos/landingpage" },
-  { src: "/images/productos/p3.jpg", title: "E-commerce",          href: "/productos/e-commerce" },
-  { src: "/images/productos/p4.jpg", title: "App",                 href: "/productos/app" },
-  { src: "/images/productos/p5.jpg", title: "Plataforma",          href: "/productos/plataforma" },
-  { src: "/images/productos/p6.jpg", title: "Academia Digital",    href: "/productos/academia" },
-];
-
-/* -------------------------------------------------------------------------- */
-/* Portfolio                                                                  */
-/* -------------------------------------------------------------------------- */
-type PortfolioLogo = { name: string; texture: string; href: string; alt: string };
-const portfolioLogos: readonly PortfolioLogo[] = [
-  { name: "Prisma",    texture: "/images/portfolio/i1.png", href: "/portfolio/prisma",    alt: "Logo Prisma 3D" },
-  { name: "Mi Vecino", texture: "/images/portfolio/i2.png", href: "/portfolio/mivecino", alt: "Logo Mi Vecino 3D" },
-  { name: "Áurea",     texture: "/images/portfolio/i3.png", href: "/portfolio/aurea",     alt: "Logo Áurea 3D" },
-] as const;
-
-/* -------------------------------------------------------------------------- */
-/* Blog                                                                       */
-/* -------------------------------------------------------------------------- */
-type BlogPost = {
-  title: string;
-  href: string;
-  img: string;
-  alt: string;
-};
-
-const blogPosts: BlogPost[] = [
-  {
-    title: "Landing, Página o Sitio: ¿qué elegir?",
-    href: "/blog/landing-vs-sitio",
-    img: "/images/blog/b1.jpg",
-    alt: "Comparativa entre landing page, página y sitio web",
-  },
-  {
-    title: "Mejores prácticas para CI/CD en Next.js",
-    href: "/blog/cicd-nextjs",
-    img: "/images/blog/b2.jpg",
-    alt: "Pipeline de integración y despliegue continuo en Next.js",
-  },
-  {
-    title: "Autenticación moderna con NextAuth y JWT",
-    href: "/blog/auth-nextauth-jwt",
-    img: "/images/blog/b3.jpg",
-    alt: "Interfaz de autenticación con OAuth y JWT",
-  },
-];
-
-/* -------------------------------------------------------------------------- */
-/* Servicios                                                                  */
-/* -------------------------------------------------------------------------- */
-const services = [
-  { icon: Code2, title: "Desarrollo Web", desc: "Sitios modernos, e-commerce y apps con SEO y rendimiento optimizado.", href: "#contact" },
-  { icon: Lock,  title: "Apps y Automatización", desc: "Automatización con apps móviles, bots, RPA y generación de documentos.", href: "#contact" },
-  { icon: Cog,   title: "Plataformas e Integraciones", desc: "Conectamos APIs, sistemas y flujos de trabajo para que todo funcione en conjunto.", href: "#contact" },
-  { icon: Shield,title: "Seguridad Aplicativa", desc: "Hardening, monitoreo continuo, autenticación y control de accesos seguros.", href: "#contact" },
-] as const;
-
-/* -------------------------------------------------------------------------- */
-/* Componente: Carrusel del Hero (alturas responsivas)                        */
+/* Carrusel del Hero                                                          */
 /* -------------------------------------------------------------------------- */
 function HeroCarousel() {
   const [index, setIndex] = useState<number>(0);
@@ -187,7 +143,6 @@ function HeroCarousel() {
           </div>
         ))}
 
-        {/* Controles */}
         <div className="absolute inset-x-0 bottom-0 p-2 sm:p-3 flex items-center justify-between gap-2">
           <div className="flex items-center gap-1">
             {heroSlides.map((_, i) => (
@@ -226,41 +181,74 @@ function HeroCarousel() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* (Opcional) Logo flotante reutilizable                                      */
+/* Menú móvil (hamburguesa)                                                   */
 /* -------------------------------------------------------------------------- */
-function FloatingLogo({ src, alt }: { src: string; alt: string }) {
+function MobileMenu() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const close = () => setOpen(false);
+    window.addEventListener("hashchange", close);
+    return () => window.removeEventListener("hashchange", close);
+  }, []);
+
   return (
-    <motion.div
-      initial={{ y: 0, scale: 1, rotate: 0, boxShadow: "0 0 0 rgba(59,130,246,0)" }}
-      animate={{
-        y: [0, -6, 0],
-        boxShadow: [
-          "0 0 0 rgba(59,130,246,0)",
-          "0 10px 28px rgba(59,130,246,0.18)",
-          "0 0 0 rgba(59,130,246,0)",
-        ],
-      }}
-      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      whileHover={{ scale: 1.05, rotate: 1.2 }}
-      whileTap={{ scale: 0.98 }}
-      className="relative w-full aspect-[4/3] rounded-2xl bg-white border border-slate-200 hover:border-blue-300 ring-1 ring-transparent hover:ring-blue-200 transition-all"
-    >
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        sizes="(min-width:1024px) 280px, 50vw"
-        className="object-contain p-6"
-      />
-    </motion.div>
+    <div className="md:hidden relative">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-label="Abrir menú"
+        aria-expanded={open}
+        aria-controls="mobile-nav"
+        className="inline-flex items-center justify-center h-10 w-10 rounded-xl border border-slate-300/70 bg-white/90 text-slate-700"
+      >
+        <span className="sr-only">Menú</span>
+        <span className="relative block h-0.5 w-5 bg-current before:absolute before:-top-2 before:h-0.5 before:w-5 before:bg-current after:absolute after:top-2 after:h-0.5 after:w-5 after:bg-current" />
+      </button>
+
+      {open && (
+        <div
+          id="mobile-nav"
+          role="dialog"
+          className="absolute right-0 mt-2 w-56 bg-white/95 backdrop-blur border border-slate-200 shadow-lg rounded-xl overflow-hidden"
+        >
+          <div className="p-2 grid">
+            {[
+              ["Nosotros", "#about"],
+              ["Servicios", "#services"],
+              ["Productos", "#productos"],
+              ["Portfolio", "#portfolio"],
+              ["Blog", "/blog"],
+              ["Contacto", "#contact"],
+            ].map(([label, href]) => (
+              <Link
+                key={label}
+                href={href}
+                className="rounded-lg px-3 py-2 text-slate-700 hover:bg-slate-100"
+                onClick={() => setOpen(false)}
+              >
+                {label}
+              </Link>
+            ))}
+            <Link
+              href="#contact"
+              className="mt-1 inline-flex items-center justify-center rounded-xl border px-3 py-2 font-semibold bg-slate-900 text-white"
+              onClick={() => setOpen(false)}
+            >
+              Cotizar
+            </Link>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
 /* -------------------------------------------------------------------------- */
-/* Página principal                                                            */
+/* Página                                                                     */
 /* -------------------------------------------------------------------------- */
-export default function F5Landing() {
-  // Smooth scroll para anclas
+export default function Page() {
+  // Smooth scroll para anclas #...
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement | null;
@@ -279,21 +267,25 @@ export default function F5Landing() {
 
   return (
     <div className="min-h-screen antialiased bg-gradient-to-b from-slate-50 to-white text-slate-900">
-      {/* =================================================================== */}
-      {/* NAVBAR */}
-      {/* =================================================================== */}
-      <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 bg-white/60 border-b border-slate-200/70">
-        {/* ↑ Ajuste de alturas para contener el logo sin desbordes */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 md:h-20 flex items-center justify-between">
-          {/* Marca (logo responsivo por altura) */}
-          <div className="shrink-0 flex items-center">
-            <div className="h-10 md:h-12 lg:h-14">
-              <BrandLogo className="h-full w-auto" />
-            </div>
+      {/* ------------------------------------------------------------------ */}
+      {/* NAVBAR (logo siempre visible y alineado; hamburguesa en móvil)     */}
+      {/* ------------------------------------------------------------------ */}
+      <header className="sticky top-0 z-[60] border-b border-slate-200/70 bg-white/90 supports-[backdrop-filter]:bg-white/70 backdrop-blur">
+        <div
+          className="
+            mx-auto max-w-7xl px-4 sm:px-6 lg:px-8
+            h-16 md:h-20
+            grid items-center
+            grid-cols-[auto_1fr_auto]   /* logo | espacio | acciones */
+          "
+        >
+          {/* Logo: alineado verticalmente, visible en todos los tamaños */}
+          <div className="h-full flex items-center">
+            <BrandLogo />
           </div>
 
-          {/* Menú */}
-          <nav className="hidden md:flex gap-3 text-base md:text-lg">
+          {/* Menú Desktop (centrado verticalmente) */}
+          <nav className="hidden md:flex justify-center gap-3">
             {[
               ["Nosotros", "#about"],
               ["Servicios", "#services"],
@@ -302,66 +294,62 @@ export default function F5Landing() {
               ["Blog", "/blog"],
               ["Contacto", "#contact"],
             ].map(([label, href]) => (
-              <ButtonLink
+              <Button
                 key={label}
-                href={href}
+                asChild
                 variant="ghost"
-                size="default"
-                className="
-                  rounded-xl font-medium text-base md:text-lg
-                  transition-colors
-                  hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-500 hover:text-white
-                  focus-visible:ring-2 focus-visible:ring-blue-600
-                "
-                ariaLabel={`Ir a ${label}`}
+                className="h-10 leading-none rounded-xl font-medium px-3
+                           hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-500 hover:text-white
+                           focus-visible:ring-2 focus-visible:ring-blue-600"
               >
-                {label}
-              </ButtonLink>
+                <Link href={href}>{label}</Link>
+              </Button>
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
-            <ButtonLink
-              href="#contact"
-              size="default"
-              className="
-                rounded-2xl shadow-sm font-semibold text-base md:text-lg
-                focus-visible:ring-2 focus-visible:ring-blue-600
-              "
-            >
-              Cotizar
-            </ButtonLink>
+          {/* Acciones: CTA en desktop, hamburguesa en móvil */}
+          <div className="flex items-center justify-end">
+            {/* CTA Desktop */}
+            <div className="hidden md:flex">
+              <Button
+                asChild
+                className="h-10 leading-none rounded-2xl shadow-sm font-semibold px-4
+                           focus-visible:ring-2 focus-visible:ring-blue-600"
+              >
+                <Link href="#contact">Cotizar</Link>
+              </Button>
+            </div>
+
+            {/* Hamburguesa Mobile (logo permanece a la izquierda) */}
+            <div className="md:hidden">
+              <MobileMenu />
+            </div>
           </div>
         </div>
       </header>
 
-      {/* =================================================================== */}
-      {/* HERO (responsivo + texto justificado) */}
-      {/* =================================================================== */}
+      {/* ------------------------------------------------------------------ */}
+      {/* HERO                                                                */}
+      {/* ------------------------------------------------------------------ */}
       <section id="home" className="relative overflow-hidden">
         <div className={`absolute inset-0 bg-gradient-to-r ${brand.primary} opacity-10`} />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="font-extrabold tracking-tight text-slate-900
-                         text-3xl sm:text-4xl lg:text-5xl xl:text-6xl
-                         leading-[1.15] sm:leading-[1.12] lg:leading-[1.1]"
+              className="font-extrabold tracking-tight text-slate-900 text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-[1.15] sm:leading-[1.12] lg:leading-[1.1]"
             >
               Software, Apps y Web a
               <br className="hidden sm:block" />
               Medida para tu Empresa
             </motion.h1>
 
-            <p className="mt-4 sm:mt-6 text-slate-700 max-w-prose
-                          text-base sm:text-lg lg:text-xl
-                          leading-relaxed sm:leading-7 text-justify">
+            <p className="mt-4 sm:mt-6 text-slate-700 max-w-prose text-base sm:text-lg lg:text-xl leading-relaxed sm:leading-7 text-justify">
               En <strong>UpF5</strong> diseñamos y desarrollamos soluciones digitales con foco en resultados: sitios web,
               e-commerce, apps y <strong>plataformas todo-en-uno</strong> sobre una arquitectura escalable,
-              <em> security-by-design</em>, integraciones API y CI/CD para acelerar tu operación con calidad y
-              trazabilidad.
+              <em> security-by-design</em>, integraciones API y CI/CD para acelerar tu operación con calidad y trazabilidad.
             </p>
 
             <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm sm:text-[15px] text-slate-600">
@@ -380,17 +368,16 @@ export default function F5Landing() {
             </div>
           </div>
 
-          {/* Carrusel visual del hero */}
           <HeroCarousel />
         </div>
       </section>
 
-      {/* =================================================================== */}
-      {/* NOSOTROS + STACK */}
-      {/* =================================================================== */}
+      {/* ------------------------------------------------------------------ */}
+      {/* NOSOTROS + STACK                                                    */}
+      {/* ------------------------------------------------------------------ */}
       <section id="about" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-stretch">
-          {/* IZQ: Sobre Nosotros */}
+          {/* IZQ */}
           <div className="relative">
             <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-600/10 via-cyan-500/10 to-blue-600/10 blur-2xl rounded-[2rem]" />
             <div className="rounded-[1.6rem] p-[1px] bg-gradient-to-br from-blue-600/60 via-cyan-500/60 to-blue-600/60 h-full">
@@ -403,27 +390,24 @@ export default function F5Landing() {
                     </span>
                   </CardTitle>
                 </CardHeader>
-
                 <CardContent className="p-6 grow">
                   <p className="text-slate-600 text-justify leading-relaxed w-full">
                     Somos un equipo especializado en <strong>ingeniería de software</strong> que cubre diseño UX/UI,
                     desarrollo full-stack, APIs e integraciones. Trabajamos con metodologías ágiles, calidad continua y
                     <em> DevSecOps</em> para entregar productos <strong>confiables, escalables y medibles</strong>, con
                     trazabilidad de cambios, automatización de despliegues (CI/CD) y observabilidad de extremo a extremo.
-                    Priorizamos <strong>seguridad por diseño</strong>, estándares de codificación y documentación operable.
                   </p>
-
                   <ul className="mt-6 space-y-3 text-slate-700 list-disc pl-5 text-justify leading-relaxed w-full">
-                    <li><strong>Descubrimiento y UX/UI</strong>: investigación, wireframes, design system y validación.</li>
-                    <li><strong>Desarrollo full-stack y APIs</strong>: arquitectura modular, pruebas y contratos claros.</li>
-                    <li><strong>DevSecOps, CI/CD y observabilidad</strong>: pipelines, monitoreo y respuesta a incidentes.</li>
+                    <li><strong>Descubrimiento y UX/UI:</strong> investigación, wireframes, design system y validación.</li>
+                    <li><strong>Desarrollo full-stack y APIs:</strong> arquitectura modular, pruebas y contratos claros.</li>
+                    <li><strong>DevSecOps, CI/CD y observabilidad:</strong> pipelines, monitoreo y respuesta a incidentes.</li>
                   </ul>
                 </CardContent>
               </Card>
             </div>
           </div>
 
-          {/* DER: Stack preferente */}
+          {/* DER */}
           <div className="relative">
             <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-600/10 via-cyan-500/10 to-blue-600/10 blur-2xl rounded-[2rem]" />
             <div className="rounded-[1.6rem] p-[1px] bg-gradient-to-br from-blue-600/60 via-cyan-500/60 to-blue-600/60 h-full">
@@ -440,9 +424,9 @@ export default function F5Landing() {
                   <div className="grid sm:grid-cols-2 gap-4">
                     {[
                       { icon: Code2, title: "Frontend", desc: "React 18, Next.js 15 (App Router), Tailwind, shadcn/ui", chips: ["React", "Next.js", "Tailwind", "shadcn/ui"] },
-                      { icon: Cog,   title: "Backend",  desc: "Node.js, NestJS/Express, Prisma, REST/GraphQL",        chips: ["Node.js", "NestJS", "Prisma", "GraphQL"] },
-                      { icon: Shield,title: "Seguridad",desc: "OAuth2/NextAuth, JWT, OWASP ASVS, rate-limit",         chips: ["OAuth2", "JWT", "OWASP", "Zod"] },
-                      { icon: Globe, title: "Infra",    desc: "Vercel, Docker, S3/Cloudflare, observabilidad",        chips: ["Vercel", "Docker", "S3", "CDN"] },
+                      { icon: Cog, title: "Backend", desc: "Node.js, NestJS/Express, Prisma, REST/GraphQL", chips: ["Node.js", "NestJS", "Prisma", "GraphQL"] },
+                      { icon: Shield, title: "Seguridad", desc: "OAuth2/NextAuth, JWT, OWASP ASVS, rate-limit", chips: ["OAuth2", "JWT", "OWASP", "Zod"] },
+                      { icon: Globe, title: "Infra", desc: "Vercel, Docker, S3/Cloudflare, observabilidad", chips: ["Vercel", "Docker", "S3", "CDN"] },
                     ].map(({ icon: Icon, title, desc, chips }) => (
                       <motion.div
                         key={title}
@@ -476,9 +460,9 @@ export default function F5Landing() {
         </div>
       </section>
 
-      {/* =================================================================== */}
-      {/* SERVICIOS */}
-      {/* =================================================================== */}
+      {/* ------------------------------------------------------------------ */}
+      {/* SERVICIOS                                                           */}
+      {/* ------------------------------------------------------------------ */}
       <section id="services" className="py-20 bg-slate-50 border-y">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold tracking-tight">Servicios</h2>
@@ -486,7 +470,7 @@ export default function F5Landing() {
             Desarrollamos soluciones de extremo a extremo. Selecciona un servicio para cotizar.
           </p>
 
-        <div className="mt-10 grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+          <div className="mt-10 grid md:grid-cols-2 xl:grid-cols-4 gap-6">
             {services.map(({ icon: Icon, title, desc, href }) => (
               <Link
                 key={title}
@@ -520,9 +504,9 @@ export default function F5Landing() {
         </div>
       </section>
 
-      {/* =================================================================== */}
-      {/* PRODUCTOS */}
-      {/* =================================================================== */}
+      {/* ------------------------------------------------------------------ */}
+      {/* PRODUCTOS                                                           */}
+      {/* ------------------------------------------------------------------ */}
       <section id="productos" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold tracking-tight">Productos</h2>
@@ -560,9 +544,9 @@ export default function F5Landing() {
         </div>
       </section>
 
-      {/* =================================================================== */}
-      {/* PORTFOLIO */}
-      {/* =================================================================== */}
+      {/* ------------------------------------------------------------------ */}
+      {/* PORTFOLIO                                                           */}
+      {/* ------------------------------------------------------------------ */}
       <section id="portfolio" className="py-20 bg-slate-50 border-y">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold tracking-tight">Portfolio</h2>
@@ -596,9 +580,9 @@ export default function F5Landing() {
         </div>
       </section>
 
-      {/* =================================================================== */}
-      {/* BLOG */}
-      {/* =================================================================== */}
+      {/* ------------------------------------------------------------------ */}
+      {/* BLOG                                                                */}
+      {/* ------------------------------------------------------------------ */}
       <section id="blog" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between">
@@ -641,9 +625,9 @@ export default function F5Landing() {
         </div>
       </section>
 
-      {/* =================================================================== */}
-      {/* CONTACTO */}
-      {/* =================================================================== */}
+      {/* ------------------------------------------------------------------ */}
+      {/* CONTACTO                                                            */}
+      {/* ------------------------------------------------------------------ */}
       <section id="contact" className="py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold tracking-tight">Contacto</h2>
@@ -678,14 +662,14 @@ export default function F5Landing() {
         </div>
       </section>
 
-      {/* =================================================================== */}
-      {/* FOOTER */}
-      {/* =================================================================== */}
+      {/* ------------------------------------------------------------------ */}
+      {/* FOOTER                                                              */}
+      {/* ------------------------------------------------------------------ */}
       <footer className="border-t">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid md:grid-cols-2 gap-6 items-center">
           <div className="flex items-center gap-3">
-            <div className="h-9">
-              <BrandLogo className="h-full w-auto" priority={false} />
+            <div className="h-10 w-auto max-w-[180px]">
+              <BrandLogo className="h-full w-auto object-contain" priority={false} />
             </div>
             <p className="text-sm text-slate-500">© {new Date().getFullYear()} UpF5. Todos los derechos reservados.</p>
           </div>

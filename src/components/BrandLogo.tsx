@@ -3,10 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
-  href?: string;                // Ancla o ruta
-  className?: string;           // Utilidades Tailwind opcionales
-  priority?: boolean;           // true en navbar
-  alt?: string;                 // Texto alternativo accesible
+  href?: string;
+  className?: string;
+  priority?: boolean;
+  alt?: string;
+  src?: string;
 };
 
 export default function BrandLogo({
@@ -14,18 +15,33 @@ export default function BrandLogo({
   className = "",
   priority = true,
   alt = "UpF5 — Software, Apps y Web",
+  src = "/images/logo/upf5-logo.png",
 }: Props) {
   return (
-    <Link href={href} aria-label="Ir al inicio (UpF5)" className="inline-flex items-center">
-      <Image
-        src="/images/logo/upf5-logo.png"   // ← Ajusta a tu carpeta real
-        alt={alt}
-        width={0}     // ← Ancho automático (lo maneja Tailwind)
-        height={0}    // ← Alto automático (lo maneja Tailwind)
-        priority={priority}
-        sizes="(max-width: 768px) 160px, (max-width: 1280px) 200px, 240px"
-        className={`h-10 md:h-16 lg:h-20 xl:h-24 w-auto select-none ${className}`}
-      />
+    <Link
+      href={href}
+      aria-label="Ir al inicio (UpF5)"
+      title="UpF5"
+      className="inline-flex items-center h-full"
+    >
+      {/* Tamaño explícito por breakpoint (más grande que antes) */}
+      <span
+        className={[
+          "relative block",
+          "h-16 w-[200px] sm:h-18 sm:w-[220px] md:h-20 md:w-[240px]",
+          className,
+        ].join(" ")}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(max-width:640px) 240px, (max-width:768px) 260px, 280px"
+          className="object-contain select-none"
+          priority={priority}
+          draggable={false}
+        />
+      </span>
     </Link>
   );
 }
