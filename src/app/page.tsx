@@ -23,6 +23,8 @@ import {
 } from "lucide-react";
 import RotatingBadge3D from "@/components/RotatingBadge3D";
 import BrandLogo from "@/components/BrandLogo";
+import WhatsAppCTA from "@/components/WhatsAppCTA";
+
 
 /* -------------------------------------------------------------------------- */
 /* Tokens simples                                                             */
@@ -248,6 +250,9 @@ function MobileMenu() {
 /* Página                                                                     */
 /* -------------------------------------------------------------------------- */
 export default function Page() {
+  // estado de envío del formulario
+  const [sending, setSending] = useState(false);
+
   // Smooth scroll para anclas #...
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -276,15 +281,15 @@ export default function Page() {
             mx-auto max-w-7xl px-4 sm:px-6 lg:px-8
             h-16 md:h-20
             grid items-center
-            grid-cols-[auto_1fr_auto]   /* logo | espacio | acciones */
+            grid-cols-[auto_1fr_auto]
           "
         >
-          {/* Logo: alineado verticalmente, visible en todos los tamaños */}
+          {/* Logo */}
           <div className="h-full flex items-center">
             <BrandLogo />
           </div>
 
-          {/* Menú Desktop (centrado verticalmente) */}
+          {/* Menú Desktop */}
           <nav className="hidden md:flex justify-center gap-3">
             {[
               ["Nosotros", "#about"],
@@ -307,7 +312,7 @@ export default function Page() {
             ))}
           </nav>
 
-          {/* Acciones: CTA en desktop, hamburguesa en móvil */}
+          {/* Acciones */}
           <div className="flex items-center justify-end">
             {/* CTA Desktop */}
             <div className="hidden md:flex">
@@ -320,7 +325,7 @@ export default function Page() {
               </Button>
             </div>
 
-            {/* Hamburguesa Mobile (logo permanece a la izquierda) */}
+            {/* Hamburguesa Mobile */}
             <div className="md:hidden">
               <MobileMenu />
             </div>
@@ -626,25 +631,60 @@ export default function Page() {
       </section>
 
       {/* ------------------------------------------------------------------ */}
-      {/* CONTACTO                                                            */}
+      {/* CONTACTO (con envío a /api/contact)                                 */}
       {/* ------------------------------------------------------------------ */}
       <section id="contact" className="py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold tracking-tight">Contacto</h2>
           <p className="mt-3 text-slate-600">¿Tienes un proyecto? Conversemos.</p>
+
           <form
             className="mt-8 grid gap-4"
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              alert("Formulario de contacto: conecte /api/contact");
+              if (sending) return;
+
+              const form = e.currentTarget as HTMLFormElement;
+              const formData = new FormData(form);
+              const payload = {
+                name: String(formData.get("name") || ""),
+                email: String(formData.get("email") || ""),
+                phone: String(formData.get("phone") || ""),
+                message: String(formData.get("message") || ""),
+              };
+
+              try {
+                setSending(true);
+                const res = await fetch("/api/contact", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(payload),
+                });
+
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) {
+                  const msg =
+                    data?.details?.formErrors?.join?.(", ") ||
+                    data?.error ||
+                    "No se pudo enviar el mensaje.";
+                  throw new Error(msg);
+                }
+
+                alert("✅ Mensaje enviado. ¡Gracias por escribirnos!");
+                form.reset();
+              } catch (err: any) {
+                alert(`❌ ${err.message || "Error de envío"}`);
+              } finally {
+                setSending(false);
+              }
             }}
           >
             <div className="grid md:grid-cols-2 gap-4">
-              <Input name="name" placeholder="Nombre" required />
-              <Input type="email" name="email" placeholder="Correo" required />
+              <Input name="name" placeholder="Nombre" required disabled={sending} />
+              <Input type="email" name="email" placeholder="Correo" required disabled={sending} />
             </div>
-            <Input name="phone" placeholder="Teléfono (opcional)" />
-            <Textarea name="message" placeholder="Cuéntanos sobre tu proyecto" rows={6} required />
+            <Input name="phone" placeholder="Teléfono (opcional)" disabled={sending} />
+            <Textarea name="message" placeholder="Cuéntanos sobre tu proyecto" rows={6} required disabled={sending} />
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4 text-slate-500 text-sm">
                 <div className="flex items-center gap-2">
@@ -654,8 +694,8 @@ export default function Page() {
                   <Mail className="h-4 w-4" /> contacto@upf5.com
                 </div>
               </div>
-              <Button type="submit" className="rounded-2xl">
-                Enviar
+              <Button type="submit" className="rounded-2xl" disabled={sending}>
+                {sending ? "Enviando..." : "Enviar"}
               </Button>
             </div>
           </form>
@@ -675,6 +715,14 @@ export default function Page() {
           </div>
         </div>
       </footer>
+
+      {/* Botón flotante de WhatsApp */}
+      <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[70]">
+      <WhatsAppCTA
+        phone="56987406850"
+        message="Hola, vengo desde UpF5. Me gustaría cotizar."
+      />
     </div>
+  </div>
   );
 }
