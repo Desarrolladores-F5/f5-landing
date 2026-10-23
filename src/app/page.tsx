@@ -704,15 +704,32 @@ export default function Page() {
 
       {/* ------------------------------------------------------------------ */}
       {/* FOOTER                                                              */}
-      {/* ------------------------------------------------------------------ */}
+      {/* FOOTER */}
       <footer className="border-t">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid md:grid-cols-2 gap-6 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col md:flex-row gap-6 items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="h-10 w-auto max-w-[180px]">
               <BrandLogo className="h-full w-auto object-contain" priority={false} />
             </div>
-            <p className="text-sm text-slate-500">© {new Date().getFullYear()} UpF5. Todos los derechos reservados.</p>
+            <p className="text-sm text-slate-500">
+              © {new Date().getFullYear()} UpF5. Todos los derechos reservados.
+            </p>
           </div>
+
+          <nav
+            aria-label="Enlaces legales"
+            className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 text-sm text-slate-600"
+          >
+            <Link href="/politica-de-privacidad" className="hover:text-blue-600 transition-colors">
+              Política de Privacidad
+            </Link>
+            <Link href="/terminos-y-condiciones" className="hover:text-blue-600 transition-colors">
+              Términos y Condiciones
+            </Link>
+            <Link href="/eliminacion-de-datos" className="hover:text-blue-600 transition-colors">
+              Eliminación de Datos
+            </Link>
+          </nav>
         </div>
       </footer>
 

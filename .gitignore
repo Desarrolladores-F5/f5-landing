@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Respaldos locales y paquetes de despliegue
+*.bak
+*.bak-*
+/out-upload.zip
